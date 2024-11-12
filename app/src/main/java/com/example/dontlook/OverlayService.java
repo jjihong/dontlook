@@ -20,6 +20,17 @@ public class OverlayService extends Service implements SensorEventListener {
     private View overlayPatternView;
     private SensorManager sensorManager;
     private Sensor accelerometer;
+    private int currentPattern;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // 인텐트로부터 선택된 패턴을 가져옴
+        if (intent != null && intent.hasExtra("selectedPattern")) {
+            currentPattern = intent.getIntExtra("selectedPattern", R.drawable.pattern_overlay);
+            applyPattern();
+        }
+        return START_STICKY;
+    }
 
     @Override
     public void onCreate() {
@@ -49,6 +60,10 @@ public class OverlayService extends Service implements SensorEventListener {
         }
     }
 
+    private void applyPattern() {
+        overlayPatternView.setBackgroundResource(currentPattern);
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -60,18 +75,13 @@ public class OverlayService extends Service implements SensorEventListener {
             if (y < 5 || Math.abs(x) > 3 || Math.abs(z) < 3) {  // 폰이 기울어진 상태
                 overlayPatternView.setAlpha(0.8f);  // 필터를 진하게 설정
             } else {
-                // 폰이 정면을 향해 세워진 상태로 간주하여 약하게 설정
                 overlayPatternView.setAlpha(0.3f);  // 필터를 약하게 설정
             }
         }
     }
 
-
-
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // 정확도 변경 시 처리 필요 없음
-    }
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     @Override
     public IBinder onBind(Intent intent) {

@@ -6,10 +6,51 @@
     android:gravity="center"
     android:padding="16dp">
 
+    <!-- 보호 활성화 버튼 -->
     <Button
         android:id="@+id/btn_toggle_overlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="보호 활성화"
         android:textSize="18sp" />
+
+    <!-- 좌우 민감도 설정 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="좌우 민감도"
+        android:paddingTop="16dp" />
+
+    <SeekBar
+        android:id="@+id/seekbar_horizontal_sensitivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <!-- 상하 민감도 설정 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="상하 민감도"
+        android:paddingTop="16dp" />
+
+    <SeekBar
+        android:id="@+id/seekbar_vertical_sensitivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10" />
+
+    <!-- 패턴 선택 드롭다운 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="패턴 선택"
+        android:paddingTop="16dp" />
+
+    <Spinner
+        android:id="@+id/spinner_pattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/pattern_options" />
+
 </LinearLayout>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">dontlook</string>
+    <!-- 패턴 선택 옵션 -->
+    <string-array name="pattern_options">
+        <item>옵션 1</item>
+        <item>옵션 2</item>
+        <item>옵션 3</item>
+    </string-array>
 </resources>
