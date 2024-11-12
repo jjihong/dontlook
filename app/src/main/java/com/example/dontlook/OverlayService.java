@@ -52,16 +52,20 @@ public class OverlayService extends Service implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            float y = event.values[1];  // y축 값을 사용해 기울기 감지
+            float x = event.values[0];  // x축 값 (좌우 기울기)
+            float y = event.values[1];  // y축 값 (상하 기울기)
+            float z = event.values[2];  // z축 값 (앞뒤 기울기)
 
-            // 정면에서는 패턴을 옅게, 기울였을 때 패턴을 진하게 설정
-            if (Math.abs(y) < 5) {
-                overlayPatternView.setAlpha(0.999f);  // 기울임 (패턴 진하게)
+            // y가 낮거나 x 값이 작은 각도에서도 즉시 반응하도록 하고, z는 덜 예민하게 설정
+            if (y < 5 || Math.abs(x) > 3 || Math.abs(z) < 3) {  // 폰이 기울어진 상태
+                overlayPatternView.setAlpha(0.8f);  // 필터를 진하게 설정
             } else {
-                overlayPatternView.setAlpha(0.5f);  // 정면 (패턴 옅게)
+                // 폰이 정면을 향해 세워진 상태로 간주하여 약하게 설정
+                overlayPatternView.setAlpha(0.3f);  // 필터를 약하게 설정
             }
         }
     }
+
 
 
     @Override

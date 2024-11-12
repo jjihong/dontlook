@@ -36,4 +36,14 @@ public class MainActivity extends AppCompatActivity {
         }
         isOverlayActive = !isOverlayActive;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isOverlayActive) {
+            // 앱이 종료될 때 오버레이 서비스를 중지
+            stopService(new Intent(this, OverlayService.class));
+            isOverlayActive = false;
+        }
+    }
 }
